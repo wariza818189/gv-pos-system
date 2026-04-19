@@ -114,3 +114,5 @@ const NavItem = ({ active, onClick, icon, label }) => (
 );
 
 export default App;
+
+// Fix para sa Vercel
