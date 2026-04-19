@@ -1,0 +1,269 @@
+/* src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+:root {
+  /* Main Colors */
+  --bg: #0f172a;           /* Dark Blue Background */
+  --surface: #1e293b;      /* Sidebar Background */
+  --surface2: #334155;     /* Card/Button Hover */
+  --border: #334155;       /* Border Color */
+  --border2: #475569;      /* Lighter Border */
+  --primary: #6366f1;      /* Indigo Theme Color */
+  
+  /* Text Colors */
+  --text2: #94a3b8;        /* Light Grayish Blue */
+  --text3: #64748b;        /* Darker Muted Text */
+  
+  /* Status Colors */
+  --green: #10b981;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --yellow: #f59e0b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: white;
+  font-family: 'Inter', -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text2);
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+:root {
+  /* Dark Mode Color Palette */
+  --bg: #0F1117;
+  --surface: #1A1D2D;
+  --surface2: #24283B;
+  --border: #2D3148;
+  --border2: #3E4460;
+  
+  /* Text Colors */
+  --text: #E0E2EA;
+  --text2: #9AA0B9;
+  --text3: #6B728E;
+  
+  /* Accent Colors */
+  --primary: #6366F1; /* Indigo/Purple theme */
+  --primary-hover: #4F46E5;
+  --green: #10B981;
+  --red: #EF4444;
+  --yellow: #F59E0B;
+  --blue: #3B82F6;
+}
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  font-family: 'Inter', sans-serif; 
+}
+
+body { 
+  background-color: var(--bg); 
+  color: var(--text); 
+  overflow: hidden; /* Aron dili mag-scroll ang tibuok page, content ra */
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* MAIN LAYOUT */
+/* ═══════════════════════════════════════════════════ */
+.app { 
+  display: flex; 
+  height: 100vh; 
+  width: 100vw; 
+}
+
+.main { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  overflow: hidden; 
+}
+
+.content { 
+  padding: 24px; 
+  overflow-y: auto; /* Kani lang nga part ang mo-scroll */
+  flex: 1; 
+  background-color: var(--bg); 
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* SIDEBAR */
+/* ═══════════════════════════════════════════════════ */
+.sidebar { 
+  width: 260px; 
+  background-color: var(--surface); 
+  border-right: 1px solid var(--border); 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.sidebar-logo { 
+  padding: 24px 20px; 
+  border-bottom: 1px solid var(--border); 
+}
+
+.logo-text { 
+  font-size: 18px; 
+  font-weight: 700; 
+  color: white; 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+}
+
+.logo-sub { 
+  font-size: 11px; 
+  color: var(--text3); 
+  margin-top: 4px; 
+  letter-spacing: 0.5px; 
+  text-transform: uppercase; 
+  font-weight: 600; 
+}
+
+.nav { 
+  flex: 1; 
+  padding: 20px 12px; 
+  overflow-y: auto; 
+}
+
+.nav-section { 
+  font-size: 11px; 
+  color: var(--text3); 
+  text-transform: uppercase; 
+  font-weight: 600; 
+  margin: 16px 0 8px 12px; 
+  letter-spacing: 0.5px; 
+}
+
+.nav-item { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  padding: 10px 12px; 
+  margin-bottom: 4px; 
+  border-radius: 8px; 
+  color: var(--text2); 
+  cursor: pointer; 
+  transition: all 0.2s ease; 
+  font-size: 14px; 
+  font-weight: 500; 
+}
+
+.nav-item:hover { 
+  background-color: var(--surface2); 
+  color: var(--text); 
+}
+
+/* Kani ang mo-design kung unsa nga page ang active */
+.nav-item.active { 
+  background-color: var(--primary); 
+  color: white; 
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2); 
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* TOPBAR */
+/* ═══════════════════════════════════════════════════ */
+.topbar { 
+  height: 70px; 
+  background-color: var(--surface); 
+  border-bottom: 1px solid var(--border); 
+  display: flex; 
+  align-items: center; 
+  padding: 0 24px; 
+  justify-content: space-between; 
+}
+
+.page-title { 
+  font-size: 20px; 
+  font-weight: 600; 
+  color: white; 
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* CARDS & COMPONENTS */
+/* ═══════════════════════════════════════════════════ */
+.card { 
+  background-color: var(--surface); 
+  border: 1px solid var(--border); 
+  border-radius: 12px; 
+  padding: 24px; 
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+}
+
+.card-title { 
+  font-size: 16px; 
+  font-weight: 600; 
+  margin-bottom: 16px; 
+  color: white; 
+  border-bottom: 1px solid var(--border); 
+  padding-bottom: 12px; 
+}
+
+/* Para sa mga "No Data" o under construction nga pages */
+.empty { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 60px 20px; 
+  text-align: center; 
+  background-color: var(--surface); 
+  border: 1px dashed var(--border2); 
+  border-radius: 12px; 
+}
+
+.empty-icon { 
+  font-size: 48px; 
+  margin-bottom: 16px; 
+  opacity: 0.8; 
+}
+
+.empty-text { 
+  color: var(--text2); 
+  font-size: 15px; 
+  font-weight: 500; 
+}
+
+/* Lists styling para sa Dashboard */
+ul {
+  list-style-type: none;
+}
+
+li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text2);
+}
+
+li:last-child {
+  border-bottom: none;
+}
