@@ -120,6 +120,10 @@ const POS = ({ products = [] }) => {
       }).join('')}
   
       <div class="data" style="top: ${223 + siTop}mm; left: ${165 + siLeft}mm; width: 25mm; text-align: right;">${fmt(subtotal)}</div>
+      
+      {/* KINI ANG BAG-O NGA LINYA PARA SA 5% O 12% */}
+      <div class="data" style="top: ${229 + siTop}mm; left: ${140 + siLeft}mm;">${config.vatRate}%</div>
+      
       <div class="data" style="top: ${229 + siTop}mm; left: ${165 + siLeft}mm; width: 25mm; text-align: right;">${fmt(vatAmount)}</div>
       <div class="data" style="top: ${235 + siTop}mm; left: ${165 + siLeft}mm; width: 25mm; text-align: right;">${fmt(netOfVat)}</div>
       <div class="data" style="top: ${259 + siTop}mm; left: ${165 + siLeft}mm; width: 25mm; text-align: right; font-size: 12pt;">${fmt(total)}</div>
