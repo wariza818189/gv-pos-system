@@ -1,102 +1,129 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase/config';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../firebase/firebaseConfig';
 
 const Settings = () => {
-  const [loading, setLoading] = useState(true);
-  const [vatRate, setVatRate] = useState(12);
-  // SI Offsets
-  const [siTop, setSiTop] = useState(0);
-  const [siLeft, setSiLeft] = useState(0);
-  // DR Offsets
-  const [drTop, setDrTop] = useState(0);
-  const [drLeft, setDrLeft] = useState(0);
+  const [config, setConfig] = useState({
+    vatRate: 12,
+    siTopOffset: 0,
+    siLeftOffset: 0,
+    drTopOffset: 0,
+    drLeftOffset: 0
+  });
 
+  const [loading, setLoading] = useState(false);
+
+  // Kuhaa ang current settings inig load
   useEffect(() => {
-    const fetchSettings = async () => {
+    const fetchConfig = async () => {
       const docRef = doc(db, 'settings', 'config');
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        const data = docSnap.data();
-        setVatRate(data.vatRate || 12);
-        setSiTop(data.siTop || 0);
-        setSiLeft(data.siLeft || 0);
-        setDrTop(data.drTop || 0);
-        setDrLeft(data.drLeft || 0);
+        setConfig(docSnap.data());
       }
-      setLoading(false);
     };
-    fetchSettings();
+    fetchConfig();
   }, []);
 
-  const saveSettings = async () => {
+  // I-save sa Firebase
+  const handleSave = async () => {
+    setLoading(true);
     try {
       await setDoc(doc(db, 'settings', 'config'), {
-        vatRate, siTop, siLeft, drTop, drLeft
+        vatRate: Number(config.vatRate || 0),
+        siTopOffset: Number(config.siTopOffset || 0),
+        siLeftOffset: Number(config.siLeftOffset || 0),
+        drTopOffset: Number(config.drTopOffset || 0),
+        drLeftOffset: Number(config.drLeftOffset || 0)
       });
-      alert("Settings saved successfully! Ready na ang imong layouts.");
+      alert("Configuration Saved!");
     } catch (error) {
+      console.error(error);
       alert("Error saving settings.");
     }
+    setLoading(false);
   };
 
-  if (loading) return <div style={{ padding: '20px', color: 'white' }}>Loading settings...</div>;
-
   return (
-    <div style={{ maxWidth: '600px' }}>
-      <div className="card">
-        <div className="card-title">⚙️ System Configuration</div>
-        
-        {/* VAT SETTING */}
-        <div style={{ marginBottom: '25px' }}>
-          <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text2)' }}>Default VAT Rate (%)</label>
-          <select 
-            value={vatRate} 
-            onChange={(e) => setVatRate(Number(e.target.value))}
-            style={{ width: '100%', padding: '12px', background: 'var(--bg)', border: '1px solid var(--border)', color: 'white', borderRadius: '6px' }}
-          >
-            <option value="12">12% Standard VAT</option>
-            <option value="5">5% Special Rate</option>
-            <option value="0">0% Non-VAT / Exempt</option>
-          </select>
-        </div>
-
-        <hr style={{ border: '0', borderTop: '1px solid var(--border)', margin: '20px 0' }} />
-
-        {/* SI LAYOUT ADJUSTMENT */}
-        <div style={{ marginBottom: '25px' }}>
-          <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>📄 Sales Invoice (SI) Layout Adjustments (mm)</div>
-          <div style={{ display: 'flex', gap: '15px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: '12px', color: 'var(--text2)' }}>Top Offset (+/-)</label>
-              <input type="number" value={siTop} onChange={(e) => setSiTop(Number(e.target.value))} style={{ width: '100%', padding: '10px', marginTop: '5px', background: 'var(--bg)', border: '1px solid var(--border)', color: 'white', borderRadius: '6px' }} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: '12px', color: 'var(--text2)' }}>Left Offset (+/-)</label>
-              <input type="number" value={siLeft} onChange={(e) => setSiLeft(Number(e.target.value))} style={{ width: '100%', padding: '10px', marginTop: '5px', background: 'var(--bg)', border: '1px solid var(--border)', color: 'white', borderRadius: '6px' }} />
-            </div>
-          </div>
-        </div>
-
-        {/* DR LAYOUT ADJUSTMENT */}
-        <div style={{ marginBottom: '25px' }}>
-          <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>🚚 Delivery Receipt (DR) Layout Adjustments (mm)</div>
-          <div style={{ display: 'flex', gap: '15px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: '12px', color: 'var(--text2)' }}>Top Offset (+/-)</label>
-              <input type="number" value={drTop} onChange={(e) => setDrTop(Number(e.target.value))} style={{ width: '100%', padding: '10px', marginTop: '5px', background: 'var(--bg)', border: '1px solid var(--border)', color: 'white', borderRadius: '6px' }} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: '12px', color: 'var(--text2)' }}>Left Offset (+/-)</label>
-              <input type="number" value={drLeft} onChange={(e) => setDrLeft(Number(e.target.value))} style={{ width: '100%', padding: '10px', marginTop: '5px', background: 'var(--bg)', border: '1px solid var(--border)', color: 'white', borderRadius: '6px' }} />
-            </div>
-          </div>
-        </div>
-
-        <button onClick={saveSettings} style={{ width: '100%', padding: '15px', background: 'var(--green)', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>
-          💾 SAVE CONFIGURATION
-        </button>
+    <div className="card" style={{ maxWidth: '600px' }}>
+      <h2 style={{ marginBottom: '20px' }}>⚙️ SYSTEM CONFIGURATION</h2>
+      
+      {/* VAT Rate Dropdown */}
+      <div style={{ marginBottom: '25px' }}>
+        <label style={{ fontSize: '12px', color: 'var(--text3)', textTransform: 'uppercase' }}>Default VAT Rate (%)</label>
+        <select 
+          value={config.vatRate} 
+          onChange={(e) => setConfig({ ...config, vatRate: Number(e.target.value) })}
+          style={{ width: '100%', padding: '12px', background: 'var(--bg)', border: '1px solid var(--border)', color: 'white', borderRadius: '8px', marginTop: '5px', cursor: 'pointer' }}
+        >
+          <option value="0">0% Non-VAT / Exempt</option>
+          <option value="5">5% Special Rate</option>
+          <option value="12">12% Standard VAT</option>
+        </select>
       </div>
+
+      <hr style={{ borderColor: 'var(--border)', margin: '20px 0' }} />
+
+      {/* Sales Invoice (SI) Offsets */}
+      <div style={{ marginBottom: '20px' }}>
+        <h3 style={{ fontSize: '14px', marginBottom: '10px' }}>📄 Sales Invoice (SI) Layout Adjustments (mm)</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+          <div>
+            <label style={{ fontSize: '11px', color: 'var(--text3)' }}>Top Offset (+/-)</label>
+            <input 
+              type="number" 
+              value={config.siTopOffset} 
+              onChange={(e) => setConfig({ ...config, siTopOffset: e.target.value })}
+              style={{ width: '100%', padding: '10px', background: 'var(--bg)', color: 'white', border: '1px solid var(--border)', borderRadius: '5px', marginTop: '5px' }}
+            />
+          </div>
+          <div>
+            <label style={{ fontSize: '11px', color: 'var(--text3)' }}>Left Offset (+/-)</label>
+            <input 
+              type="number" 
+              value={config.siLeftOffset} 
+              onChange={(e) => setConfig({ ...config, siLeftOffset: e.target.value })}
+              style={{ width: '100%', padding: '10px', background: 'var(--bg)', color: 'white', border: '1px solid var(--border)', borderRadius: '5px', marginTop: '5px' }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <hr style={{ borderColor: 'var(--border)', margin: '20px 0' }} />
+
+      {/* Delivery Receipt (DR) Offsets */}
+      <div style={{ marginBottom: '25px' }}>
+        <h3 style={{ fontSize: '14px', marginBottom: '10px' }}>🚚 Delivery Receipt (DR) Layout Adjustments (mm)</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+          <div>
+            <label style={{ fontSize: '11px', color: 'var(--text3)' }}>Top Offset (+/-)</label>
+            <input 
+              type="number" 
+              value={config.drTopOffset} 
+              onChange={(e) => setConfig({ ...config, drTopOffset: e.target.value })}
+              style={{ width: '100%', padding: '10px', background: 'var(--bg)', color: 'white', border: '1px solid var(--border)', borderRadius: '5px', marginTop: '5px' }}
+            />
+          </div>
+          <div>
+            <label style={{ fontSize: '11px', color: 'var(--text3)' }}>Left Offset (+/-)</label>
+            <input 
+              type="number" 
+              value={config.drLeftOffset} 
+              onChange={(e) => setConfig({ ...config, drLeftOffset: e.target.value })}
+              style={{ width: '100%', padding: '10px', background: 'var(--bg)', color: 'white', border: '1px solid var(--border)', borderRadius: '5px', marginTop: '5px' }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Save Button */}
+      <button 
+        onClick={handleSave} 
+        disabled={loading}
+        style={{ width: '100%', padding: '15px', background: '#2ecc71', color: '#1a1a2e', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}
+      >
+        {loading ? 'SAVING...' : '💾 SAVE CONFIGURATION'}
+      </button>
     </div>
   );
 };
