@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, getDocs } from 'firebase/firestore';
-import { auth, db } from './firebase/firebaseConfig';
+import { auth, db } from './firebase/config.js';
 import './App.css'; // Siguruha nga naa ni kung naa kay CSS
 
 // 1. I-IMPORT ANG TANAN NIMO NGA PAGES
