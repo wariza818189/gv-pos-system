@@ -13,3 +13,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+// ... (imong mga naunang code sa taas) ...
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; // <-- KINI ANG IDUGANG
+
+const firebaseConfig = {
+  // ... (imong mga API keys naa dinhi) ...
+};
+
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const auth = getAuth(app); // <-- KINI ANG IDUGANG UG I-EXPORT
