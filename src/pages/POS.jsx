@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
+import { db } from '../firebase/config.js';
 
 const POS = ({ products }) => {
   const [cart, setCart] = useState([]);

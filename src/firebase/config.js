@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+
 // ... (imong mga naunang code sa taas) ...
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";

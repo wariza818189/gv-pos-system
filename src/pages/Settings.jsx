@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebaseConfig';
+import { db } from '../firebase/config.js';
 
 const Settings = () => {
   const [config, setConfig] = useState({
