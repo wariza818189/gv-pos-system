@@ -1,5 +1,7 @@
+// ... (imong mga naunang code sa taas) ...
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; // <-- KINI ANG IDUGANG
 
 const firebaseConfig = {
   apiKey: "AIzaSyBcVnCsXikUOo8fcNzOVebIvVZzeLyyEWE",
@@ -9,17 +11,6 @@ const firebaseConfig = {
   messagingSenderId: "434134989671",
   appId: "1:434134989671:web:1046998027e7aa0edfcdc2",
   measurementId: "G-954P87YSXT"
-};
-
-const app = initializeApp(firebaseConfig);
-
-// ... (imong mga naunang code sa taas) ...
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth"; // <-- KINI ANG IDUGANG
-
-const firebaseConfig = {
-  // ... (imong mga API keys naa dinhi) ...
 };
 
 const app = initializeApp(firebaseConfig);
